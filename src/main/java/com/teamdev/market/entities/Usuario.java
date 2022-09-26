@@ -2,18 +2,21 @@ package com.teamdev.market.entities;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-
-import org.springframework.beans.factory.annotation.Value;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -47,23 +50,27 @@ public class Usuario implements Serializable {
 	@Getter @Setter
 	private String direccion;
 	
-	@Column(name = "password", nullable = false, length = 20)
+	@Column(name = "password", nullable = false, length = 244)
 	@Getter @Setter
 	private String password;
 	
-	// A = activo, D = deshabilitado
-	@Value("A")
-	@Column(name = "estado", nullable = false, length = 1)
+	//Boolean
+	@Column(name = "estado", nullable = false)
 	@Getter @Setter
-	private String estado;
+	private Boolean estado;
 	
-	@ManyToOne
-	@JoinColumn(name = "rol_id", nullable = false)
+	@ManyToMany(cascade = CascadeType.MERGE, fetch=FetchType.EAGER)
+	@JoinTable(
+		name = "usuarios_roles", 
+		joinColumns = @JoinColumn(name = "usuario_id"),
+		inverseJoinColumns = @JoinColumn(name = "rol_id"),
+		uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id", "rol_id"})}
+	)
 	@Getter @Setter
-	private Rol rol;
+	private List<Rol> roles;
 	
 	@PrePersist
 	public void setEstado() {
-		this.estado = "A";
+		this.estado = true;
 	}
 }

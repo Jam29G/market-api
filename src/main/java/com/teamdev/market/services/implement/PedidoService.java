@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,10 @@ import com.teamdev.market.services.interfaces.IpedidoService;
 
 @Service
 public class PedidoService implements IpedidoService {
+	
+	
+	private static final Logger log = LoggerFactory.getLogger(PedidoService.class);
+
 	
 	@Autowired
 	private PedidoRepo repository;
@@ -71,9 +77,18 @@ public class PedidoService implements IpedidoService {
 		
 		pedidoChange.setEstado(estado);
 		
-		if(estado == "F") pedidoChange.setFechaEntrega(new Date());
+		if(estado.equals("F")) {
+			pedidoChange.setFechaEntrega(new Date());
+			log.info("Fecha de entrega: " + pedidoChange.getFechaEntrega());
+		}
 		
 		return repository.save(pedidoChange);
+	}
+
+	@Override
+	public List<Pedido> findByUsuarioId(Integer id) {
+		
+		return repository.findByUsuarioId(id);
 	}
 
 }

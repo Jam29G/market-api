@@ -6,7 +6,7 @@ import com.teamdev.market.entities.Usuario;
 
 public interface IusuarioService {
 	
-	public List<Usuario> getAll();
+	public List<Usuario> getAll(Boolean estado);
 	
 	public Usuario getById(Integer id);
 	
@@ -15,5 +15,9 @@ public interface IusuarioService {
 	public Usuario update(Usuario usuario, Integer integer);
 	
 	public void delete(Integer id);
+	
+	public Usuario getByCorreo(String correo);
+	
+	public Usuario restore(Integer id);
 
 }

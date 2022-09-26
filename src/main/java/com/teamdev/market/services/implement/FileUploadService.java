@@ -16,9 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @CrossOrigin
 public class FileUploadService {
-	
-	
-	//private static final Logger log = LoggerFactory.getLogger(FileUploadService.class);
+
 
 
 	
@@ -32,12 +30,15 @@ public class FileUploadService {
 	}
 	
 	public boolean deleteFile(String deleteFile) {
+		
 		Path rootPath = getPath(deleteFile);
 		File file = rootPath.toFile();
 		
 		if(file.exists() && file.canRead()) return file.delete();
 		
-		throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al eliminar la imagen: " + deleteFile);
+		
+		
+		throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al eliminar la imagen " + deleteFile);
 		
 	}
 	

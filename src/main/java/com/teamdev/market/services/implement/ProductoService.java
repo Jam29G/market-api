@@ -87,9 +87,7 @@ public class ProductoService implements IproductoService {
 		productoUpdate.setCategoria(producto.getCategoria());	
 		
 		if(img != null) {
-			if(!fileManager.deleteFile(oldImage)) {
-				throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al eliminar la imagen");
-			}
+			fileManager.deleteFile(oldImage);
 		};
 		productoUpdate = repository.save(productoUpdate);
 		
@@ -112,6 +110,13 @@ public class ProductoService implements IproductoService {
 	public List<Producto> getInactivos() {
 		
 		return repository.findByEstado("D");
+	}
+
+	@Override
+	public Producto changeState(Integer id, String estado) {
+		Producto productoUpdate = this.getById(id);
+		productoUpdate.setEstado(estado);
+		return repository.save(productoUpdate);
 	}
 	
 	

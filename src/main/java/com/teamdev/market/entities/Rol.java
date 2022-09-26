@@ -17,6 +17,32 @@ import lombok.Setter;
 @Table(name = "roles")
 public class Rol implements Serializable {
 	
+	public Rol() {
+		
+	}
+	
+	
+	
+	public Rol(Integer id) {
+		this.id = id;
+	}
+
+
+
+	public Rol(Integer id, String nombre) {
+		this.id = id;
+		this.nombre = nombre;
+	}
+	
+	
+
+	public Rol(String nombre) {
+		super();
+		this.nombre = nombre;
+	}
+
+
+
 	@Serial
     private static final long serialVersionUID = 1;
 	
@@ -29,5 +55,7 @@ public class Rol implements Serializable {
 	@Getter @Setter
 	@Column(name = "nombre", nullable = false, length = 60, unique = true)
 	private String nombre;
+	
+	
 	
 }

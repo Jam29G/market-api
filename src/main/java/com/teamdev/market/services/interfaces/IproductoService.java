@@ -20,6 +20,8 @@ public interface IproductoService {
 	
 	public Producto update(Producto producto, Integer id, MultipartFile img);
 	
+	public Producto changeState(Integer id, String estado);
+	
 	public void delete(Integer id);
 
 }

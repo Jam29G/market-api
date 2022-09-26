@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ public class CategoriaController {
 	@Autowired
 	private IcategoriaService categoriaService;
 	
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping()
 	public ResponseEntity<List<Categoria>> getAll() {
 		
@@ -33,21 +35,25 @@ public class CategoriaController {
 		
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> getById(@PathVariable("id") Integer id) {
 		return new ResponseEntity<Categoria>(categoriaService.getById(id), HttpStatus.OK);
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping()
 	public ResponseEntity<Categoria> create(@RequestBody Categoria categoria) {
 		return new ResponseEntity<Categoria>(categoriaService.save(categoria), HttpStatus.CREATED);
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/{id}")
 	public ResponseEntity<Categoria> update(@RequestBody Categoria categoria, @PathVariable Integer id) {
 		return new ResponseEntity<Categoria>(categoriaService.update(categoria, id), HttpStatus.OK);
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
 		categoriaService.delete(id);

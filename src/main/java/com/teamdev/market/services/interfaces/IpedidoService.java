@@ -15,6 +15,8 @@ public interface IpedidoService {
 	
 	public Pedido changeState(Integer id, String estado);
 	
+	public List<Pedido> findByUsuarioId(Integer id);
+	
 	
 
 }
